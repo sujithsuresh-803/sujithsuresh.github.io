@@ -65,10 +65,23 @@
   .chstats{display:flex;gap:14px;margin-top:6px;}
   .chs{font-size:.76rem;color:var(--muted);}
   .chs strong{color:var(--text);}
-  .chr{display:flex;gap:10px;align-items:center;}
+  .chr{display:flex;gap:10px;align-items:center;position:relative;}
   .bsub{background:var(--text);color:var(--bg);border:none;padding:10px 22px;border-radius:20px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:'Roboto',sans-serif;transition:background .15s;text-decoration:none;display:inline-block;}
   .bsub:hover{background:#e0e0e0;}
-  .bmore{background:var(--surface2);color:var(--text);border:none;padding:10px 14px;border-radius:20px;font-size:1rem;cursor:pointer;}
+
+  /* MORE BUTTON + DROPDOWN */
+  .more-wrap{position:relative;}
+  .bmore{background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:10px 14px;border-radius:20px;font-size:1rem;cursor:pointer;transition:background .15s;}
+  .bmore:hover{background:var(--surface3);}
+  .more-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;min-width:220px;box-shadow:0 8px 32px rgba(0,0,0,.55);z-index:400;overflow:hidden;animation:dropIn .18s ease;}
+  @keyframes dropIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .more-dropdown.open{display:block;}
+  .more-item{display:flex;align-items:center;gap:12px;padding:14px 18px;text-decoration:none;color:var(--text);font-size:.86rem;transition:background .12s;cursor:pointer;}
+  .more-item:hover{background:var(--surface2);}
+  .more-item-ic{font-size:1.1rem;flex-shrink:0;}
+  .more-item-label{font-size:.68rem;color:var(--muted);display:block;margin-bottom:1px;}
+  .more-item-val{font-weight:500;}
+  .more-divider{height:1px;background:var(--border);margin:0 12px;}
 
   /* TABS */
   .tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:28px;overflow-x:auto;}
@@ -228,8 +241,38 @@
       </div>
     </div>
     <div class="chr">
-      <a href="mailto:sujithsuresh803@gmail.com" class="bsub">Hire Me</a>
-      <button class="bmore">•••</button>
+      <!-- Hire Me → opens mail client -->
+      <a href="mailto:sujithsuresh803@gmail.com?subject=Hiring%20Inquiry%20%E2%80%94%20Sujith%20Suresh&body=Hi%20Sujith%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20love%20to%20connect%20about%20a%20potential%20opportunity.%0A%0A" class="bsub">Hire Me</a>
+
+      <!-- ••• → phone dropdown -->
+      <div class="more-wrap">
+        <button class="bmore" id="moreBtn" onclick="toggleMore(event)">•••</button>
+        <div class="more-dropdown" id="moreDropdown">
+          <a href="tel:+918296491170" class="more-item">
+            <span class="more-item-ic">📞</span>
+            <div>
+              <span class="more-item-label">Call me at</span>
+              <span class="more-item-val">+91 82964 91170</span>
+            </div>
+          </a>
+          <div class="more-divider"></div>
+          <a href="mailto:sujithsuresh803@gmail.com" class="more-item">
+            <span class="more-item-ic">✉️</span>
+            <div>
+              <span class="more-item-label">Email</span>
+              <span class="more-item-val">sujithsuresh803@gmail.com</span>
+            </div>
+          </a>
+          <div class="more-divider"></div>
+          <a href="https://linkedin.com/in/sujith-suresh" target="_blank" class="more-item">
+            <span class="more-item-ic">💼</span>
+            <div>
+              <span class="more-item-label">LinkedIn</span>
+              <span class="more-item-val">linkedin.com/in/sujith-suresh</span>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -393,11 +436,13 @@
 </div>
 
 <script>
+  // Scroll reveal
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('on'), i*45); });
   }, { threshold: 0.06 });
   document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
+  // Tabs
   document.querySelectorAll('.tab').forEach(t => {
     t.addEventListener('click', () => {
       document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
@@ -409,6 +454,16 @@
       document.querySelectorAll('.sbi').forEach(x => x.classList.remove('on'));
       s.classList.add('on');
     });
+  });
+
+  // ••• dropdown toggle
+  function toggleMore(e) {
+    e.stopPropagation();
+    document.getElementById('moreDropdown').classList.toggle('open');
+  }
+  // Close dropdown when clicking outside
+  document.addEventListener('click', () => {
+    document.getElementById('moreDropdown').classList.remove('open');
   });
 </script>
 </body>
