@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sujith Suresh — Product Operations Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Amazon+Ember:wght@400;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amzn: #FF9900;
+    --amzn-dark: #E47911;
+    --amzn-light: rgba(255,153,0,0.12);
+    --bg: #0D1117;
+    --bg2: #161B22;
+    --surface: #1C2128;
+    --surface2: #252B34;
+    --surface3: #2D333B;
+    --border: #30363D;
+    --text: #E6EDF3;
+    --muted: #8B949E;
+    --blue: #58A6FF;
+    --green: #3FB950;
+    --green-bg: rgba(63,185,80,0.12);
+    --music-purple: #9D4EDD;
+    --music-purple-bg: rgba(157,78,221,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+  /* ── NAVBAR ── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 400;
+    height: 60px; background: rgba(13,17,23,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px;
+  }
+  .nav-left { display: flex; align-items: center; gap: 20px; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--amzn), #FF6B35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .9rem;
+  }
+  .logo-name { font-weight: 700; font-size: .95rem; color: var(--text); }
+  .logo-sub { font-size: .7rem; color: var(--muted); margin-top: 1px; }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-link {
+    padding: 6px 14px; border-radius: 6px; font-size: .84rem;
+    color: var(--muted); text-decoration: none; transition: all .15s;
+    font-weight: 500;
+  }
+  .nav-link:hover, .nav-link.on { color: var(--text); background: var(--surface2); }
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .nav-btn {
+    padding: 7px 18px; border-radius: 8px; font-size: .84rem;
+    font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    transition: all .15s; border: none;
+  }
+  .nav-btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+  .nav-btn-ghost:hover { background: var(--surface3); border-color: var(--amzn); }
+  .nav-btn-primary { background: var(--amzn); color: #111; }
+  .nav-btn-primary:hover { background: var(--amzn-dark); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 100px 60px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(255,153,0,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 20% 80%, rgba(157,78,221,0.05) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px; opacity: .18;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amzn-light); border: 1px solid rgba(255,153,0,0.3);
+    color: var(--amzn); font-size: .72rem; font-weight: 700;
+    padding: 5px 14px; border-radius: 100px; letter-spacing: .06em;
+    text-transform: uppercase; margin-bottom: 28px;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amzn); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .hero-title {
+    font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700;
+    line-height: 1.1; letter-spacing: -.03em; margin-bottom: 24px;
+  }
+  .hero-title span { color: var(--amzn); }
+  .hero-sub { font-size: 1.05rem; color: var(--muted); line-height: 1.8; margin-bottom: 40px; max-width: 580px; }
+  .hero-sub strong { color: var(--text); }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+  .hero-btn-main {
+    background: var(--amzn); color: #111; padding: 13px 28px;
+    border-radius: 8px; font-weight: 700; font-size: .9rem;
+    text-decoration: none; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background .15s, transform .15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hero-btn-main:hover { background: var(--amzn-dark); transform: translateY(-1px); }
+  .hero-btn-sec {
+    background: var(--surface2); color: var(--text);
+    padding: 13px 28px; border-radius: 8px; font-weight: 600;
+    font-size: .9rem; text-decoration: none; border: 1px solid var(--border);
+    transition: border-color .15s, transform .15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hero-btn-sec:hover { border-color: var(--amzn); transform: translateY(-1px); }
+  .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
+  .hstat { text-align: left; }
+  .hstat-num { font-size: 2rem; font-weight: 700; color: var(--amzn); line-height: 1; letter-spacing: -.03em; }
+  .hstat-label { font-size: .74rem; color: var(--muted); margin-top: 4px; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 80px 60px; max-width: 1200px; margin: 0 auto; }
+  .sec-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+    letter-spacing: .12em; color: var(--amzn); text-transform: uppercase;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+  }
+  .sec-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--amzn); }
+  .sec-title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700;
+    letter-spacing: -.02em; margin-bottom: 48px; line-height: 1.2;
+  }
+  .sec-title span { color: var(--amzn); }
+
+  /* ── PROJECT CARDS ── */
+  .proj-list { display: flex; flex-direction: column; gap: 3px; }
+  .proj-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .proj-card:hover { border-color: rgba(255,153,0,.4); box-shadow: 0 4px 24px rgba(255,153,0,.06); }
+  .proj-inner { display: grid; grid-template-columns: 260px 1fr; }
+  .proj-left {
+    padding: 36px 32px; border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .proj-num { font-size: 4.5rem; font-weight: 700; color: var(--border); line-height: 1; letter-spacing: -.05em; margin-bottom: 20px; }
+  .proj-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: 'JetBrains Mono', monospace; font-size: .62rem;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 4px; font-weight: 600; margin-bottom: 12px;
+    width: fit-content;
+  }
+  .badge-live { background: var(--green-bg); color: var(--green); }
+  .badge-shipped { background: rgba(88,166,255,.12); color: var(--blue); }
+  .badge-ml { background: var(--music-purple-bg); color: var(--music-purple); }
+  .badge-pub { background: rgba(255,153,0,.1); color: var(--amzn); }
+  .badge-dot2 { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+  .proj-title { font-size: 1.25rem; font-weight: 700; line-height: 1.25; margin-bottom: 6px; }
+  .proj-org { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--muted); letter-spacing: .06em; }
+  .proj-right { padding: 36px 44px; }
+  .psi { display: flex; flex-direction: column; gap: 18px; margin-bottom: 24px; }
+  .psi-row { display: grid; grid-template-columns: 80px 1fr; gap: 14px; }
+  .psi-lbl { font-family: 'JetBrains Mono', monospace; font-size: .62rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; padding-top: 2px; }
+  .psi-txt { font-size: .9rem; color: var(--muted); line-height: 1.7; }
+  .psi-txt strong { color: var(--text); }
+  .impact-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .imp { font-family: 'JetBrains Mono', monospace; font-size: .7rem; padding: 5px 12px; border-radius: 4px; font-weight: 500; }
+  .imp-green { background: var(--green-bg); color: var(--green); }
+  .imp-blue { background: rgba(88,166,255,.12); color: var(--blue); }
+  .imp-amzn { background: var(--amzn-light); color: var(--amzn); }
+  .proj-tech { display: flex; flex-wrap: wrap; gap: 7px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .tech-tag { font-size: .72rem; color: var(--muted); background: var(--bg2); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
+
+  /* ── EXPERIENCE ── */
+  .exp-timeline { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid; grid-template-columns: 160px 1fr;
+    border-bottom: 1px solid var(--border); padding: 36px 0;
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-date { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--muted); line-height: 1.7; padding-right: 32px; border-right: 1px solid var(--border); }
+  .exp-body { padding-left: 40px; }
+  .exp-co { font-size: 1.15rem; font-weight: 700; margin-bottom: 3px; }
+  .exp-role { font-size: .84rem; color: var(--muted); margin-bottom: 16px; }
+  .exp-bls { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .exp-bls li { font-size: .85rem; color: var(--muted); padding-left: 16px; position: relative; line-height: 1.6; }
+  .exp-bls li::before { content: '▸'; position: absolute; left: 0; color: var(--amzn); font-size: .68rem; top: 3px; }
+  .exp-tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: .62rem; background: var(--green-bg); color: var(--green); padding: 2px 7px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
+
+  /* ── SKILLS ── */
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .skill-group { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+  .sg-title { font-size: .72rem; font-family: 'JetBrains Mono', monospace; color: var(--amzn); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 16px; }
+  .sg-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { font-size: .78rem; padding: 5px 12px; border-radius: 100px; border: 1px solid var(--border); color: var(--muted); background: var(--bg2); transition: all .15s; cursor: default; }
+  .pill:hover { border-color: var(--amzn); color: var(--amzn); }
+  .pill.hot { border-color: rgba(255,153,0,.4); color: var(--amzn); background: var(--amzn-light); }
+
+  /* ── ABOUT ── */
+  .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: start; }
+  .about-body p { font-size: .92rem; color: var(--muted); line-height: 1.85; margin-bottom: 16px; }
+  .about-body p:first-child { font-size: 1.05rem; color: var(--text); font-weight: 500; }
+  .about-body p strong { color: var(--text); }
+  .about-links { display: flex; flex-direction: column; gap: 10px; }
+  .about-link {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px;
+    text-decoration: none; color: var(--text);
+    font-size: .86rem; transition: all .15s;
+  }
+  .about-link:hover { border-color: var(--amzn); background: var(--amzn-light); }
+  .al-ic { font-size: 1.1rem; flex-shrink: 0; }
+  .al-lbl { font-size: .62rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 2px; }
+  .al-val { font-size: .84rem; font-weight: 500; }
+
+  /* ── CONTACT ── */
+  .contact-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 48px; }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .contact-left h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; }
+  .contact-left p { font-size: .9rem; color: var(--muted); line-height: 1.75; }
+  .contact-cards { display: flex; flex-direction: column; gap: 10px; }
+  .contact-card {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px; background: var(--bg2);
+    border: 1px solid var(--border); border-radius: 8px;
+    text-decoration: none; color: var(--text);
+    transition: border-color .15s, background .15s;
+  }
+  .contact-card:hover { border-color: var(--amzn); background: var(--amzn-light); }
+  .cc-ic { font-size: 1.2rem; flex-shrink: 0; }
+  .cc-lbl { font-size: .62rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 3px; }
+  .cc-val { font-size: .86rem; font-weight: 600; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); padding: 28px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 100%;
+  }
+  footer span { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--muted); }
+  .footer-amzn { color: var(--amzn); }
+
+  /* ── HIRE MODAL ── */
+  .modal-bg {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,.8); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; max-width: 460px; width: calc(100% - 48px);
+    padding: 36px 32px; position: relative;
+    box-shadow: 0 32px 80px rgba(0,0,0,.8);
+    animation: mIn .2s ease;
+  }
+  @keyframes mIn { from{opacity:0;transform:scale(.94) translateY(16px)} to{opacity:1;transform:none} }
+  .modal-close {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; color: var(--muted);
+    font-size: 1.3rem; cursor: pointer; border-radius: 6px;
+    padding: 4px 8px; transition: color .15s;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .modal-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--amzn); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .modal-title { font-size: 1.1rem; font-weight: 700; }
+  .modal-msg { font-size: .87rem; color: var(--muted); line-height: 1.75; margin-bottom: 24px; padding-left: 48px; }
+  .modal-msg strong { color: var(--text); }
+  .modal-links { display: flex; flex-direction: column; gap: 9px; }
+  .modal-link {
+    display: flex; align-items: center; gap: 14px;
+    padding: 13px 16px; background: var(--bg2);
+    border: 1px solid var(--border); border-radius: 8px;
+    text-decoration: none; color: var(--text);
+    transition: border-color .15s, background .15s;
+  }
+  .modal-link:hover { border-color: var(--amzn); background: var(--amzn-light); }
+  .ml-ic { font-size: 1.1rem; flex-shrink: 0; }
+  .ml-lbl { font-size: .6rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 2px; }
+  .ml-val { font-size: .84rem; font-weight: 600; }
+  .modal-foot { font-size: .72rem; color: var(--muted); text-align: center; margin-top: 18px; }
+
+  /* ── REVEAL ── */
+  .rv { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+  .rv.on { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 960px) {
+    .nav-links { display: none; }
+    .hero { padding: 90px 24px 60px; }
+    .section { padding: 60px 24px; }
+    .proj-inner, .about-grid, .contact-inner { grid-template-columns: 1fr; }
+    .proj-left { border-right: none; border-bottom: 1px solid var(--border); }
+    .exp-item { grid-template-columns: 1fr; }
+    .exp-date { border-right: none; padding-right: 0; margin-bottom: 12px; }
+    .exp-body { padding-left: 0; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .contact-wrap { padding: 28px 24px; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <a class="nav-logo" href="#">
+      <div class="logo-mark">🎵</div>
+      <div>
+        <div class="logo-name">Sujith Suresh</div>
+        <div class="logo-sub">Product Operations Manager</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#experience" class="nav-link">Experience</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a href="https://linkedin.com/in/sujith-suresh" target="_blank" class="nav-btn nav-btn-ghost">💼 LinkedIn</a>
+    <button class="nav-btn nav-btn-primary" onclick="openModal()">Hire Me</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content rv">
+    <div class="hero-badge"><span class="badge-dot"></span>Open to Opportunities · Bangalore</div>
+    <h1 class="hero-title">Turning Customer Feedback into <span>Product Action.</span></h1>
+    <p class="hero-sub">
+      I bridge <strong>customers and product teams</strong> — synthesising data from feedback channels, routing quality issues, grooming backlogs, and driving dogfooding programs. Built to bring this discipline to <strong>Amazon Music</strong>.
+    </p>
+    <div class="hero-actions">
+      <button class="hero-btn-main" onclick="openModal()">🎵 Work With Me</button>
+      <a href="#projects" class="hero-btn-sec">View My Work →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">50+</div><div class="hstat-label">Countries served</div></div>
+      <div class="hstat"><div class="hstat-num">100%</div><div class="hstat-label">RCA accuracy</div></div>
+      <div class="hstat"><div class="hstat-num">850+</div><div class="hstat-label">Customer interactions synthesised</div></div>
+      <div class="hstat"><div class="hstat-num">80%</div><div class="hstat-label">Reporting effort reduced at Amazon</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="rv">
+    <div class="sec-eyebrow">Selected work</div>
+    <div class="sec-title">Products &amp; operations <span>I've owned</span></div>
+  </div>
+  <div class="proj-list">
+
+    <div class="proj-card rv">
+      <div class="proj-inner">
+        <div class="proj-left">
+          <div class="proj-num">01</div>
+          <div>
+            <div class="proj-badge badge-live"><span class="badge-dot2"></span>Live in Production</div>
+            <div class="proj-title">3PC No-Data Alarm</div>
+            <div class="proj-org">BUCKMAN · GLOBAL</div>
+          </div>
+        </div>
+        <div class="proj-right">
+          <div class="psi">
+            <div class="psi-row"><div class="psi-lbl">Problem</div><div class="psi-txt">Zero visibility into 3PC IoT connectivity-loss events. Sales, CSE &amp; RDEM teams had no way to know when data stopped flowing — customers discovered issues before the product team did.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Solution</div><div class="psi-txt">Synthesised customer feedback from 850+ support interactions to surface the gap. Authored <strong>BRD &amp; FRD</strong>, designed Figma wireframes, and drove Agile delivery from conception to production across EMENA, RSA &amp; NA.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Impact</div><div class="psi-txt"><div class="impact-row"><span class="imp imp-green">100% connectivity-loss detection</span><span class="imp imp-amzn">50+ countries</span><span class="imp imp-blue">#1 requested feature</span></div></div></div>
+          </div>
+          <div class="proj-tech"><span class="tech-tag">Customer Discovery</span><span class="tech-tag">BRD/FRD</span><span class="tech-tag">Figma</span><span class="tech-tag">Agile</span><span class="tech-tag">Azure IoT</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card rv">
+      <div class="proj-inner">
+        <div class="proj-left">
+          <div class="proj-num">02</div>
+          <div>
+            <div class="proj-badge badge-live"><span class="badge-dot2"></span>Live · AI Automation</div>
+            <div class="proj-title">IoT Alarm Automation Engine</div>
+            <div class="proj-org">BUCKMAN · GLOBAL OPS</div>
+          </div>
+        </div>
+        <div class="proj-right">
+          <div class="psi">
+            <div class="psi-row"><div class="psi-lbl">Problem</div><div class="psi-txt">L1 analysts manually triaging 1,000+ IoT sensor alarms — repetitive, slow, and inconsistent. No automated feedback loop to catch quality issues proactively.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Solution</div><div class="psi-txt">Built Python scripts replicating analyst decision logic. Integrated <strong>LENS, AT&amp;T &amp; Azure Device Explorer APIs</strong> for real-time diagnostics. Applied <strong>DMAIC methodology</strong>: defined, measured, analysed, improved, controlled.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Impact</div><div class="psi-txt"><div class="impact-row"><span class="imp imp-green">100% RCA accuracy</span><span class="imp imp-green">100+ hrs/week saved</span><span class="imp imp-blue">Zero manual triage</span></div></div></div>
+          </div>
+          <div class="proj-tech"><span class="tech-tag">Python</span><span class="tech-tag">Azure IoT Hub</span><span class="tech-tag">LENS API</span><span class="tech-tag">AT&amp;T API</span><span class="tech-tag">DMAIC</span><span class="tech-tag">RCA</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card rv">
+      <div class="proj-inner">
+        <div class="proj-left">
+          <div class="proj-num">03</div>
+          <div>
+            <div class="proj-badge badge-live"><span class="badge-dot2"></span>Live · Customer-Facing</div>
+            <div class="proj-title">Platform Quality Dashboards</div>
+            <div class="proj-org">BUCKMAN · 50+ COUNTRIES</div>
+          </div>
+        </div>
+        <div class="proj-right">
+          <div class="psi">
+            <div class="psi-row"><div class="psi-lbl">Problem</div><div class="psi-txt">No unified visibility into IoT controller health. Quality issues were discovered reactively — through customer complaints rather than proactive monitoring.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Solution</div><div class="psi-txt">Built Cloak, ACM &amp; ABM <strong>Power BI dashboards with Row-Level Security</strong> — giving Sales and Digital teams real-time actionable quality metrics. Cloak extended to customers Jan 2026.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Impact</div><div class="psi-txt"><div class="impact-row"><span class="imp imp-green">Fleet-wide outage caught proactively</span><span class="imp imp-amzn">Daily use · 50+ countries</span></div></div></div>
+          </div>
+          <div class="proj-tech"><span class="tech-tag">Power BI</span><span class="tech-tag">Row-Level Security</span><span class="tech-tag">SQL</span><span class="tech-tag">Quality Metrics</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card rv">
+      <div class="proj-inner">
+        <div class="proj-left">
+          <div class="proj-num">04</div>
+          <div>
+            <div class="proj-badge badge-shipped"><span class="badge-dot2"></span>Shipped · Amazon</div>
+            <div class="proj-title">Last Mile WBR Dashboard</div>
+            <div class="proj-org">AMAZON · HYDERABAD</div>
+          </div>
+        </div>
+        <div class="proj-right">
+          <div class="psi">
+            <div class="psi-row"><div class="psi-lbl">Problem</div><div class="psi-txt">20+ Last Mile departments tracking KPIs in silos. No unified feedback channel, heavy manual reporting, inconsistent quality metrics across the organisation.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Solution</div><div class="psi-txt">Ran <strong>discovery sessions with each stakeholder group</strong> to map KPI gaps. Built a unified QuickSight dashboard backed by an automated <strong>AWS S3 ETL pipeline</strong>. Standardised reporting frameworks org-wide.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Impact</div><div class="psi-txt"><div class="impact-row"><span class="imp imp-green">80% reduction in manual effort</span><span class="imp imp-blue">20+ teams unified</span></div></div></div>
+          </div>
+          <div class="proj-tech"><span class="tech-tag">Amazon QuickSight</span><span class="tech-tag">AWS S3</span><span class="tech-tag">Redshift</span><span class="tech-tag">ETL</span><span class="tech-tag">SQL</span><span class="tech-tag">Stakeholder Discovery</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card rv">
+      <div class="proj-inner">
+        <div class="proj-left">
+          <div class="proj-num">05</div>
+          <div>
+            <div class="proj-badge badge-live"><span class="badge-dot2"></span>AI Quality Eval</div>
+            <div class="proj-title">GenAI Chatbot QA Program</div>
+            <div class="proj-org">BUCKMAN · INTERNAL</div>
+          </div>
+        </div>
+        <div class="proj-right">
+          <div class="psi">
+            <div class="psi-row"><div class="psi-lbl">Problem</div><div class="psi-txt">Internal GenAI chatbot launching with no structured quality evaluation — failures undocumented, no feedback loop to product/engineering.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Solution</div><div class="psi-txt">Designed a structured <strong>weekly QA evaluation framework</strong> — categorising failures by model logic gaps vs. knowledge base gaps. Automated Excel ingestion for test case tracking and produced actionable weekly insight reports for the product team.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Impact</div><div class="psi-txt"><div class="impact-row"><span class="imp imp-green">Systematic quality feedback loop</span><span class="imp imp-amzn">Direct roadmap influence</span></div></div></div>
+          </div>
+          <div class="proj-tech"><span class="tech-tag">GenAI QA</span><span class="tech-tag">Feedback Analysis</span><span class="tech-tag">Python</span><span class="tech-tag">Excel Automation</span><span class="tech-tag">Reporting</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card rv">
+      <div class="proj-inner">
+        <div class="proj-left">
+          <div class="proj-num">06</div>
+          <div>
+            <div class="proj-badge badge-shipped"><span class="badge-dot2"></span>Shipped · Bosch</div>
+            <div class="proj-title">AIVA — Assembly Vision QA</div>
+            <div class="proj-org">ROBERT BOSCH · BENGALURU</div>
+          </div>
+        </div>
+        <div class="proj-right">
+          <div class="psi">
+            <div class="psi-row"><div class="psi-lbl">Problem</div><div class="psi-txt">Manual inspection on fuel pump assembly line — wrong or missing parts causing costly defects, no automated quality monitoring.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Solution</div><div class="psi-txt">Co-built AIVA using <strong>OpenCV &amp; Siemens S7 PLC</strong> for real-time defect detection. Designed SQLite ROI database enabling non-technical operators to configure quality rules without code changes.</div></div>
+            <div class="psi-row"><div class="psi-lbl">Impact</div><div class="psi-txt"><div class="impact-row"><span class="imp imp-green">70% defect reduction</span><span class="imp imp-blue">Real-time detection</span></div></div></div>
+          </div>
+          <div class="proj-tech"><span class="tech-tag">Python</span><span class="tech-tag">OpenCV</span><span class="tech-tag">Siemens S7 PLC</span><span class="tech-tag">SQLite</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills" style="background:var(--bg2);max-width:100%;padding:80px 0;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 60px;">
+    <div class="rv">
+      <div class="sec-eyebrow">Capabilities</div>
+      <div class="sec-title">Skills &amp; <span>Tools</span></div>
+    </div>
+    <div class="skills-grid rv">
+      <div class="skill-group">
+        <div class="sg-title">Product Operations</div>
+        <div class="sg-pills">
+          <span class="pill hot">Customer Feedback Analysis</span>
+          <span class="pill hot">Actionable Insights</span>
+          <span class="pill hot">Backlog Grooming</span>
+          <span class="pill hot">Quality Metrics</span>
+          <span class="pill hot">Beta Testing &amp; Dogfooding</span>
+          <span class="pill">Defect Triage &amp; Routing</span>
+          <span class="pill">BRD / FRD</span>
+          <span class="pill">UAT</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="sg-title">Analytical &amp; Process</div>
+        <div class="sg-pills">
+          <span class="pill hot">Data Synthesis</span>
+          <span class="pill hot">Root Cause Analysis</span>
+          <span class="pill hot">DMAIC Methodology</span>
+          <span class="pill">Lean Thinking</span>
+          <span class="pill">Process Standardisation</span>
+          <span class="pill">KPI Framework Design</span>
+          <span class="pill">ETL Pipelines</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="sg-title">Data &amp; BI</div>
+        <div class="sg-pills">
+          <span class="pill hot">SQL (Advanced)</span>
+          <span class="pill hot">Power BI (RLS)</span>
+          <span class="pill hot">Amazon QuickSight</span>
+          <span class="pill">AWS S3 / Redshift</span>
+          <span class="pill">MS Excel / Access</span>
+          <span class="pill">Data-Driven Decisions</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="sg-title">AI &amp; Automation</div>
+        <div class="sg-pills">
+          <span class="pill hot">AI Workflow Automation</span>
+          <span class="pill hot">Python</span>
+          <span class="pill">Azure Logic Apps (OCR/ML)</span>
+          <span class="pill">RPA</span>
+          <span class="pill">GenAI QA Evaluation</span>
+          <span class="pill">Automated Reporting</span>
+          <span class="pill">GCP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="rv">
+    <div class="sec-eyebrow">Career</div>
+    <div class="sec-title">Where I've <span>worked</span></div>
+  </div>
+  <div class="exp-timeline">
+
+    <div class="exp-item rv">
+      <div class="exp-date">Jan 2026<br>Present</div>
+      <div class="exp-body">
+        <div class="exp-co">Buckman</div>
+        <div class="exp-role">Digital Innovation Engineer · Chennai, India</div>
+        <ul class="exp-bls">
+          <li>Alarm quality automation — 1,000+ IoT sensors, LENS/AT&T/Azure APIs integrated<span class="exp-tag">100% RCA accuracy</span></li>
+          <li>3PC custom alarm config: customer discovery → FRD → Figma → UAT — driving beta testing and feedback aggregation</li>
+          <li>Azure Function Apps &amp; OCR/RPA pipeline maintenance across 4 global regions</li>
+          <li>GenAI chatbot structured QA program — weekly failure categorisation driving product roadmap decisions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item rv">
+      <div class="exp-date">Feb 2024<br>Dec 2025</div>
+      <div class="exp-body">
+        <div class="exp-co">Buckman</div>
+        <div class="exp-role">Associate Digital Innovation Engineer · Chennai, India</div>
+        <ul class="exp-bls">
+          <li>Synthesised 850+ customer interactions into actionable product insights — 125 DevOps tickets raised, 52% user-reported<span class="exp-tag">Quality ops</span></li>
+          <li>Shipped 3PC No-Data Alarm (conception to production) — #1 requested feature, active in 50+ countries</li>
+          <li>Power BI quality dashboards (RLS) — proactively caught fleet-wide outage before customer escalation</li>
+          <li>Resolved critical SAP pricing pipeline failure blocking financial data sync globally</li>
+          <li>Recognised by RSA RDEM, CDO &amp; CEO → promoted to Digital Innovation Engineer</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item rv">
+      <div class="exp-date">Jan 2023<br>Jun 2023</div>
+      <div class="exp-body">
+        <div class="exp-co">Amazon</div>
+        <div class="exp-role">L4 Business Analyst Intern · Hyderabad, India</div>
+        <ul class="exp-bls">
+          <li>Discovery sessions with 20+ stakeholder groups to map feedback and KPI gaps → unified WBR dashboard<span class="exp-tag">80% effort saved</span></li>
+          <li>Automated AWS S3 ETL pipeline — standardised reporting frameworks across Last Mile org</li>
+          <li>SQL query optimisation on Redshift — reducing dashboard load times for operational teams</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item rv">
+      <div class="exp-date">Jun 2022<br>Jul 2022</div>
+      <div class="exp-body">
+        <div class="exp-co">Robert Bosch</div>
+        <div class="exp-role">Engineer Intern · Bengaluru, India</div>
+        <ul class="exp-bls">
+          <li>Co-built AIVA computer vision QA system — OpenCV + Siemens PLC<span class="exp-tag">70% defect reduction</span></li>
+          <li>Designed SQLite config layer for non-technical operator quality rule customisation</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about" style="background:var(--bg2);max-width:100%;padding:80px 0;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 60px;">
+    <div class="rv">
+      <div class="sec-eyebrow">About me</div>
+      <div class="sec-title">The person <span>behind the work</span></div>
+    </div>
+    <div class="about-grid rv">
+      <div class="about-body">
+        <p>I bridge customers and product teams — and I've been doing it for two years at scale.</p>
+        <p>I'm analytical enough to <strong>synthesise data from complex feedback channels</strong>, technical enough to navigate engineering conversations, and people-smart enough to align cross-functional stakeholders around what actually needs to happen. I'm comfortable with ambiguity, energised by quality problems, and deeply motivated by the idea that great product operations is what separates "shipped" from "working".</p>
+        <p>Passionate about music, AI, and the intersection of both. I believe the creator and fan experience is won or lost in the details — in the quality of every interaction, every feature, every edge case caught before it ships. That's exactly what <strong>Amazon Music Product Operations</strong> does, and exactly where I want to be.</p>
+        <p>B.Tech Mechanical Engineering · Amrita School of Engineering · CGPA 8.46</p>
+      </div>
+      <div class="about-links">
+        <a href="mailto:sujithsuresh803@gmail.com" class="about-link">
+          <span class="al-ic">✉️</span>
+          <div><div class="al-lbl">Email</div><div class="al-val">sujithsuresh803@gmail.com</div></div>
+        </a>
+        <a href="tel:+918296491170" class="about-link">
+          <span class="al-ic">📞</span>
+          <div><div class="al-lbl">Phone</div><div class="al-val">+91 8296491170</div></div>
+        </a>
+        <a href="https://linkedin.com/in/sujith-suresh" target="_blank" class="about-link">
+          <span class="al-ic">💼</span>
+          <div><div class="al-lbl">LinkedIn</div><div class="al-val">linkedin.com/in/sujith-suresh</div></div>
+        </a>
+        <a href="https://sujithsuresh.github.io" target="_blank" class="about-link">
+          <span class="al-ic">🌐</span>
+          <div><div class="al-lbl">Portfolio</div><div class="al-val">sujithsuresh.github.io</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="contact-wrap rv">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <h3>Let's build something great.</h3>
+        <p>Open to <strong style="color:var(--amzn)">Product Operations Manager</strong>, Product Manager, and AI Platform roles at companies where quality is taken seriously and customer obsession is real.</p>
+      </div>
+      <div class="contact-cards">
+        <a href="mailto:sujithsuresh803@gmail.com?subject=Hiring%20Enquiry%20%E2%80%94%20Sujith%20Suresh" class="contact-card">
+          <span class="cc-ic">✉️</span>
+          <div><div class="cc-lbl">Email</div><div class="cc-val">sujithsuresh803@gmail.com</div></div>
+        </a>
+        <a href="tel:+918296491170" class="contact-card">
+          <span class="cc-ic">📞</span>
+          <div><div class="cc-lbl">Phone</div><div class="cc-val">+91 8296491170</div></div>
+        </a>
+        <a href="https://linkedin.com/in/sujith-suresh" target="_blank" class="contact-card">
+          <span class="cc-ic">💼</span>
+          <div><div class="cc-lbl">LinkedIn</div><div class="cc-val">linkedin.com/in/sujith-suresh</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Sujith Suresh · Product Operations Manager</span>
+  <span class="footer-amzn">♪ Built for Amazon Music</span>
+</footer>
+
+<!-- HIRE MODAL -->
+<div class="modal-bg" id="hireModal" onclick="handleOverlay(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-head">
+      <div class="modal-icon">🎵</div>
+      <div class="modal-title">Thanks for your interest!</div>
+    </div>
+    <p class="modal-msg">
+      I'm actively looking for <strong>Product Operations Manager</strong> and PM roles where I can bridge customers and product teams at scale.<br><br>
+      Reach out through any channel below — I respond within 24 hours.
+    </p>
+    <div class="modal-links">
+      <a href="mailto:sujithsuresh803@gmail.com?subject=Hiring%20Enquiry%20%E2%80%94%20Sujith%20Suresh" class="modal-link">
+        <span class="ml-ic">✉️</span>
+        <div><div class="ml-lbl">Email</div><div class="ml-val">sujithsuresh803@gmail.com</div></div>
+      </a>
+      <a href="tel:+918296491170" class="modal-link">
+        <span class="ml-ic">📞</span>
+        <div><div class="ml-lbl">Phone</div><div class="ml-val">+91 8296491170</div></div>
+      </a>
+      <a href="https://linkedin.com/in/sujith-suresh" target="_blank" class="modal-link">
+        <span class="ml-ic">💼</span>
+        <div><div class="ml-lbl">LinkedIn</div><div class="ml-val">linkedin.com/in/sujith-suresh</div></div>
+      </a>
+    </div>
+    <p class="modal-foot">I look forward to connecting with you.</p>
+  </div>
+</div>
+
+<script>
+  // Modal
+  function openModal() {
+    document.getElementById('hireModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('hireModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function handleOverlay(e) {
+    if (e.target === document.getElementById('hireModal')) closeModal();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('on'), i * 55);
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navLinks.forEach(l => {
+      l.classList.remove('on');
+      if (l.getAttribute('href') === '#' + current) l.classList.add('on');
+    });
+  });
+</script>
+</body>
+</html>
